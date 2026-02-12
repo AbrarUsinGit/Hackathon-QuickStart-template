@@ -17,6 +17,7 @@ const BenefitDistribution: React.FC<Props> = ({ openModal, closeModal }) => {
     const [step, setStep] = useState<'idle' | 'scan' | 'verify' | 'claiming'>('idle');
     const [claimData, setClaimData] = useState<any>(null);
     const [status, setStatus] = useState<string>('');
+    const [verificationMethod, setVerificationMethod] = useState<string>('');
 
     const algodConfig = getAlgodConfigFromViteEnvironment();
     const algorand = algokit.AlgorandClient.fromConfig({ algodConfig });
@@ -31,9 +32,17 @@ const BenefitDistribution: React.FC<Props> = ({ openModal, closeModal }) => {
         setStatus('QR Code Scanned. Please verify identity.');
     };
 
-    const handleBiometricSuccess = async (proof: string) => {
+    const handleBiometricVerified = async (success: boolean, method: string) => {
+        setVerificationMethod(method);
+
+        if (!success) {
+            setStatus(`${method} verification failed. Please try again.`);
+            setStep('idle');
+            return;
+        }
+
         setStep('claiming');
-        setStatus('Identity Verified. Processing Claim...');
+        setStatus(`Identity Verified via ${method}. Processing Claim...`);
 
         if (!activeAddress || !APP_ID) {
             setStatus('Error: Wallet not connected or App ID missing.');
@@ -53,7 +62,7 @@ const BenefitDistribution: React.FC<Props> = ({ openModal, closeModal }) => {
             await appClient.send.claimBenefits({
                 args: {
                     beneficiary: activeAddress,
-                    biometricProof: proof
+                    biometricProof: `${method}_verified_${Date.now()}`
                 }
             });
 
@@ -93,7 +102,10 @@ const BenefitDistribution: React.FC<Props> = ({ openModal, closeModal }) => {
                 )}
 
                 {step === 'verify' && (
-                    <BiometricVerification userId={activeAddress || ''} onSuccess={handleBiometricSuccess} />
+                    <BiometricVerification
+                        onVerified={handleBiometricVerified}
+                        beneficiaryName={activeAddress || ''}
+                    />
                 )}
 
                 {step === 'claiming' && (
