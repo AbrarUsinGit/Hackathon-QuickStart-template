@@ -9,6 +9,7 @@ import AssetOptIn from './components/AssetOptIn'
 import Bank from './components/Bank'
 import BenefitDistribution from './components/BenefitDistribution'
 import AgencyDashboard from './components/AgencyDashboard'
+import GovernmentBenefitsDistribution from './components/GovernmentBenefitsDistribution'
 
 interface HomeProps { }
 
@@ -19,9 +20,10 @@ const Home: React.FC<HomeProps> = () => {
   const [mintNftModal, setMintNftModal] = useState<boolean>(false)
   const [createAsaModal, setCreateAsaModal] = useState<boolean>(false)
   const [assetOptInModal, setAssetOptInModal] = useState<boolean>(false)
-  const [bankModal, setBankModal] = useState<boolean>(false)
-  const [benefitModal, setBenefitModal] = useState<boolean>(false)
-  const [agencyModal, setAgencyModal] = useState<boolean>(false)
+  const [openDemoModal, setOpenDemoModal] = useState<boolean>(false)
+  const [openBenefitsModal, setOpenBenefitsModal] = useState<boolean>(false)
+  const [openAgencyModal, setOpenAgencyModal] = useState<boolean>(false)
+  const [openGovBenefitsModal, setOpenGovBenefitsModal] = useState<boolean>(false)
   const { activeAddress } = useWallet()
 
   const toggleWalletModal = () => {
@@ -59,7 +61,7 @@ const Home: React.FC<HomeProps> = () => {
                 <h2 className="card-title">Claim Benefits</h2>
                 <p>Biometric auth & Offline QR claims.</p>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-outline text-white hover:bg-white hover:text-green-600" disabled={!activeAddress} onClick={() => setBenefitModal(true)}>Open</button>
+                  <button className="btn btn-outline text-white hover:bg-white hover:text-green-600" disabled={!activeAddress} onClick={() => setOpenBenefitsModal(true)}>Open</button>
                 </div>
               </div>
             </div>
@@ -69,7 +71,17 @@ const Home: React.FC<HomeProps> = () => {
                 <h2 className="card-title">Agency Dashboard</h2>
                 <p>Admin controls: Issue, Freeze, Clawback.</p>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-outline text-white hover:bg-white hover:text-gray-800" disabled={!activeAddress} onClick={() => setAgencyModal(true)}>Open</button>
+                  <button className="btn btn-outline text-white hover:bg-white hover:text-gray-800" disabled={!activeAddress} onClick={() => setOpenAgencyModal(true)}>Open</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title">🏛️ Full Benefits System</h2>
+                <p>Complete solution: Registration, Mass Disbursement, QR Codes, Admin Controls</p>
+                <div className="card-actions justify-end">
+                  <button className="btn btn-outline text-white hover:bg-white hover:text-purple-600" disabled={!activeAddress} onClick={() => setOpenGovBenefitsModal(true)}>Open</button>
                 </div>
               </div>
             </div>
@@ -136,7 +148,7 @@ const Home: React.FC<HomeProps> = () => {
                 <h2 className="card-title">Bank</h2>
                 <p>Deposit and withdraw ALGOs and view statements.</p>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-outline" disabled={!activeAddress} onClick={() => setBankModal(true)}>Open</button>
+                  <button className="btn btn-outline" disabled={!activeAddress} onClick={() => setOpenDemoModal(true)}>Open</button>
                 </div>
               </div>
             </div>
@@ -150,11 +162,12 @@ const Home: React.FC<HomeProps> = () => {
       <MintNFT openModal={mintNftModal} closeModal={() => setMintNftModal(false)} />
       <CreateASA openModal={createAsaModal} closeModal={() => setCreateAsaModal(false)} />
       <AssetOptIn openModal={assetOptInModal} closeModal={() => setAssetOptInModal(false)} />
-      <Bank openModal={bankModal} closeModal={() => setBankModal(false)} />
+      <Bank openModal={openDemoModal} closeModal={() => setOpenDemoModal(false)} />
 
       {/* NEW Modals */}
-      <BenefitDistribution openModal={benefitModal} closeModal={() => setBenefitModal(false)} />
-      <AgencyDashboard openModal={agencyModal} closeModal={() => setAgencyModal(false)} />
+      <BenefitDistribution openModal={openBenefitsModal} closeModal={() => setOpenBenefitsModal(false)} />
+      <AgencyDashboard openModal={openAgencyModal} closeModal={() => setOpenAgencyModal(false)} />
+      <GovernmentBenefitsDistribution openModal={openGovBenefitsModal} closeModal={() => setOpenGovBenefitsModal(false)} />
 
     </div>
   )
