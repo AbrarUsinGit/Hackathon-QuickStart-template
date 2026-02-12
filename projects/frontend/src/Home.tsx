@@ -1,4 +1,3 @@
-// src/components/Home.tsx
 import { useWallet } from '@txnlab/use-wallet-react'
 import React, { useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
@@ -8,8 +7,10 @@ import MintNFT from './components/MintNFT'
 import CreateASA from './components/CreateASA'
 import AssetOptIn from './components/AssetOptIn'
 import Bank from './components/Bank'
+import BenefitDistribution from './components/BenefitDistribution'
+import AgencyDashboard from './components/AgencyDashboard'
 
-interface HomeProps {}
+interface HomeProps { }
 
 const Home: React.FC<HomeProps> = () => {
   const [openWalletModal, setOpenWalletModal] = useState<boolean>(false)
@@ -19,6 +20,8 @@ const Home: React.FC<HomeProps> = () => {
   const [createAsaModal, setCreateAsaModal] = useState<boolean>(false)
   const [assetOptInModal, setAssetOptInModal] = useState<boolean>(false)
   const [bankModal, setBankModal] = useState<boolean>(false)
+  const [benefitModal, setBenefitModal] = useState<boolean>(false)
+  const [agencyModal, setAgencyModal] = useState<boolean>(false)
   const { activeAddress } = useWallet()
 
   const toggleWalletModal = () => {
@@ -45,10 +48,32 @@ const Home: React.FC<HomeProps> = () => {
       {/* Centered content with background blur for readability */}
       <div className="flex items-center justify-center min-h-screen px-4">
         <div className="backdrop-blur-md bg-white/70 rounded-2xl p-8 shadow-xl max-w-5xl w-full">
-          <h1 className="text-4xl font-extrabold text-teal-700 mb-6 text-center">Algorand Workshop Template</h1>
-          <p className="text-gray-700 mb-8 text-center">Algorand operations in one-place.</p>
+          <h1 className="text-4xl font-extrabold text-teal-700 mb-6 text-center">Government Benefits Portal</h1>
+          <p className="text-gray-700 mb-8 text-center">Algorand Hackathon Quickstart</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {/* NEW Government Cards */}
+            <div className="card bg-gradient-to-br from-green-600 to-emerald-600 text-white shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title">Claim Benefits</h2>
+                <p>Biometric auth & Offline QR claims.</p>
+                <div className="card-actions justify-end">
+                  <button className="btn btn-outline text-white hover:bg-white hover:text-green-600" disabled={!activeAddress} onClick={() => setBenefitModal(true)}>Open</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card bg-gradient-to-br from-slate-700 to-gray-800 text-white shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title">Agency Dashboard</h2>
+                <p>Admin controls: Issue, Freeze, Clawback.</p>
+                <div className="card-actions justify-end">
+                  <button className="btn btn-outline text-white hover:bg-white hover:text-gray-800" disabled={!activeAddress} onClick={() => setAgencyModal(true)}>Open</button>
+                </div>
+              </div>
+            </div>
+
             <div className="card bg-gradient-to-br from-sky-500 to-cyan-500 text-white shadow-xl">
               <div className="card-body">
                 <h2 className="card-title">Send Algo</h2>
@@ -91,7 +116,7 @@ const Home: React.FC<HomeProps> = () => {
 
             <div className="card bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-xl md:col-span-2 lg:col-span-1">
               <div className="card-body">
-                <h2 className="card-title">Counter (App ID 747652603)</h2>
+                <h2 className="card-title">Counter</h2>
                 <p>Interact with the shared on-chain counter app.</p>
                 <div className="card-actions justify-end">
                   <button
@@ -126,6 +151,11 @@ const Home: React.FC<HomeProps> = () => {
       <CreateASA openModal={createAsaModal} closeModal={() => setCreateAsaModal(false)} />
       <AssetOptIn openModal={assetOptInModal} closeModal={() => setAssetOptInModal(false)} />
       <Bank openModal={bankModal} closeModal={() => setBankModal(false)} />
+
+      {/* NEW Modals */}
+      <BenefitDistribution openModal={benefitModal} closeModal={() => setBenefitModal(false)} />
+      <AgencyDashboard openModal={agencyModal} closeModal={() => setAgencyModal(false)} />
+
     </div>
   )
 }
