@@ -2,7 +2,7 @@
 
 This starter full stack project has been generated using AlgoKit. See below for default getting started instructions.
 
-Check out 3-4 different types of deployement we can make within frontend for smart contracts.
+
 
 ## Setup
 
@@ -32,6 +32,29 @@ For pushes to `main` branch, after the above checks pass, the following deployme
   - The frontend application is deployed to a provider of your choice (Netlify, Vercel, etc.). See [frontend README](frontend/README.md) for more information.
 
 > Please note deployment of smart contracts is done via `algokit deploy` command which can be invoked both via CI as seen on this project, or locally. For more information on how to use `algokit deploy` please see [AlgoKit documentation](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/deploy.md).
+
+## Deployment
+
+### Frontend Deployment
+
+The frontend is built with Vite and can be easily deployed to modern static hosting platforms. Detailed guides for Vercel and Netlify are available in the [frontend documentation](projects/frontend/README.md).
+
+- **Vercel**: Requires `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` secrets.
+- **Netlify**: Requires `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` secrets.
+
+### Smart Contract Deployment
+
+Smart contracts are deployed using the `algokit deploy` command, which supports idempotency and distinct environments (LocalNet, TestNet, MainNet).
+
+- **LocalNet**:
+  ```bash
+  algokit deploy localnet
+  ```
+- **TestNet**:
+  ```bash
+  algokit deploy testnet
+  ```
+  *Note: Ensure you have a funded deployer account. See [contracts documentation](projects/contracts/README.md) for setting up `DEPLOYER_MNEMONIC`.*
 
 ## Tools
 

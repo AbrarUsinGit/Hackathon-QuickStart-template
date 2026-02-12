@@ -18,9 +18,9 @@ This guide helps non‑technical founders and developers quickly prototype and t
 ## 1) Project Setup
 
 Prerequisites:
-- Docker (running)
-- Node.js 18+ and npm
-- AlgoKit installed (see official docs)
+- [Docker](https://www.docker.com/) (running)
+- [Node.js](https://nodejs.org/) 18+ and npm
+- [AlgoKit](https://github.com/algorandfoundation/algokit-cli) installed (see official docs)
 
 Clone or fork the base template:
 
